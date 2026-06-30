@@ -1,0 +1,45 @@
+# Project Luna — 本番/ステージング用インフラ（任意）。
+#
+# ローカルMVPはこれ無しで動く（教師データはSQLite/JSONLに蓄積）。
+# スケール時に PostgreSQL(pgvector) + Redis を有効化し、長期記憶(RAG)と
+# 自律タスクのキューを本番グレードへ引き上げる。
+#
+# 使い方: docker compose -f infra/docker-compose.yml up -d
+
+version: "3.9"
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: luna-postgres
+    environment:
+      POSTGRES_USER: luna
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: luna
+    ports:
+      - "5432:5432"
+    volumes:
+      - luna_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U luna"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: luna-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - luna_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  luna_pgdata:
+  luna_redisdata:
