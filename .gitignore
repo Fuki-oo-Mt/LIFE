@@ -1,0 +1,29 @@
+# Node
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Env / secrets
+.env
+.env.local
+*.local
+
+# Data flywheel output (教師データ — ローカル蓄積分はコミットしない)
+apps/agent/data/store/*.jsonl
+apps/agent/data/store/*.sqlite3
+apps/agent/data/store/*.db
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.log

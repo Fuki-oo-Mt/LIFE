@@ -1,0 +1,18 @@
+# --- Web / WebSocket ---
+fastapi>=0.110
+uvicorn[standard]>=0.29
+websockets>=12.0
+
+# --- 設定 ---
+python-dotenv>=1.0
+pydantic>=2.6
+
+# --- HTTP（self_hosted / 将来の自社モデル接続用）---
+httpx>=0.27
+
+# --- LLMプロバイダ（任意・未導入でもエコーモードで起動可）---
+anthropic>=0.40          # Claude
+google-genai>=0.3        # Gemini
+
+# --- 自律エージェント・オーケストレーション（任意・未導入時は内蔵ランナーで動作）---
+langgraph>=0.2
