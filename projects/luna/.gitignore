@@ -1,5 +1,3 @@
-# ワークスペース共通の無視設定（各プロジェクトは自身の .gitignore も持つ）
-
 # Node
 node_modules/
 .next/
@@ -18,6 +16,11 @@ venv/
 .env
 .env.local
 *.local
+
+# Data flywheel output (教師データ — ローカル蓄積分はコミットしない)
+apps/agent/data/store/*.jsonl
+apps/agent/data/store/*.sqlite3
+apps/agent/data/store/*.db
 
 # OS / editor
 .DS_Store
