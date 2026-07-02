@@ -27,6 +27,15 @@ const EYE = "#5b8def";
 const EYE_DARK = "#3461c4";
 const BLUSH = "#ffb3b3";
 const MOUTH = "#c95b6a";
+// 衣装（確定版・モダンカジュアル）
+const HOODIE = "#3f6fb5";
+const HOODIE_SHADOW = "#31578f";
+const CORD = "#ef9bb3";
+const CLOTH_WHITE = "#ffffff";
+const CLOTH_WHITE_SHADOW = "#e5ebf6";
+const TIGHTS = "#eef0fb";
+const SNEAKER = "#3f6fb5";
+const SNEAKER_SOLE = "#ffffff";
 
 export default function FallbackAvatar({ emotion, speaking }: FallbackAvatarProps) {
   const [blink, setBlink] = useState(false);
@@ -178,24 +187,48 @@ export default function FallbackAvatar({ emotion, speaking }: FallbackAvatarProp
         {/* 背後の月光グロー */}
         <circle cx="100" cy="120" r="95" fill="url(#lunaGlow)" />
 
-        {/* 体・服（淡い月夜カラーのワンピース）— Lunaのオリジナル衣装 */}
-        <path
-          d="M62 230 Q60 180 78 168 L122 168 Q140 180 138 230 Z"
-          fill="#9aa7e8"
-        />
-        <path d="M78 168 L122 168 L116 188 L84 188 Z" fill="#b7c1f2" />
-        {/* 襟もとのリボン */}
-        <path d="M94 170 L106 170 L103 180 L97 180 Z" fill="#ef9bb3" />
-        <circle cx="100" cy="172" r="3" fill="#f6b6cd" />
-
-        {/* 首 */}
-        <rect x="92" y="150" width="16" height="22" rx="7" fill={SKIN_SHADOW} />
+        {/* 体・服（確定版：青パーカー×白ショートパンツ×白タイツ×青スニーカー）*/}
+        {/* 脚（白タイツ）*/}
+        <rect x="87" y="204" width="11" height="20" rx="5" fill={TIGHTS} stroke={CLOTH_WHITE_SHADOW} strokeWidth="0.8" />
+        <rect x="102" y="204" width="11" height="20" rx="5" fill={TIGHTS} stroke={CLOTH_WHITE_SHADOW} strokeWidth="0.8" />
+        {/* 青スニーカー */}
+        <path d="M82 221 Q82 217 88 217 L98 217 L98 226 Q98 229 94 229 L85 229 Q82 229 82 226 Z" fill={SNEAKER} />
+        <path d="M102 217 L112 217 Q118 217 118 221 L118 226 Q118 229 115 229 L106 229 Q102 229 102 226 Z" fill={SNEAKER} />
+        <rect x="81" y="227" width="18" height="2.6" rx="1.3" fill={SNEAKER_SOLE} />
+        <rect x="101" y="227" width="18" height="2.6" rx="1.3" fill={SNEAKER_SOLE} />
+        {/* 白のショートパンツ */}
+        <path d="M79 194 L121 194 L120 210 L104 210 L100 203 L96 210 L80 210 Z" fill={CLOTH_WHITE} stroke={CLOTH_WHITE_SHADOW} strokeWidth="0.8" />
+        {/* 青パーカー（本体）*/}
+        <path d="M72 168 Q100 159 128 168 L131 199 Q100 206 69 199 Z" fill={HOODIE} />
+        {/* 袖 */}
+        <path d="M72 168 Q60 173 62 195 Q62 199 67 199 L77 198 Q74 180 82 171 Z" fill={HOODIE} />
+        <path d="M128 168 Q140 173 138 195 Q138 199 133 199 L123 198 Q126 180 118 171 Z" fill={HOODIE} />
+        {/* 手 */}
+        <circle cx="65" cy="200" r="5.5" fill={SKIN} />
+        <circle cx="135" cy="200" r="5.5" fill={SKIN} />
+        {/* お腹のポケット */}
+        <path d="M83 189 L117 189 L112 199 L88 199 Z" fill={HOODIE_SHADOW} opacity="0.45" />
 
         {/* 後ろ髪 */}
         <path
           d="M52 96 Q50 158 70 176 L130 176 Q150 158 148 96 Z"
           fill={HAIR_SHADOW}
         />
+
+        {/* 首（後ろ髪より手前）*/}
+        <rect x="93" y="150" width="14" height="18" rx="6" fill={SKIN_SHADOW} />
+        {/* パーカーのフード襟 */}
+        <path d="M83 165 Q100 178 117 165 Q117 172 100 179 Q83 172 83 165 Z" fill={HOODIE_SHADOW} />
+        {/* 白Tシャツ（襟のぞき）*/}
+        <path d="M92 166 L100 176 L108 166 Q100 171 92 166 Z" fill={CLOTH_WHITE} />
+        {/* ジッパー */}
+        <line x1="100" y1="176" x2="100" y2="199" stroke={HOODIE_SHADOW} strokeWidth="1.6" />
+        <circle cx="100" cy="178" r="1.8" fill={HAIR_LIGHT} />
+        {/* フードの紐（ピンクの差し色）*/}
+        <path d="M96 177 Q95 185 95.5 191" stroke={CORD} strokeWidth="2" fill="none" strokeLinecap="round" />
+        <path d="M104 177 Q105 185 104.5 191" stroke={CORD} strokeWidth="2" fill="none" strokeLinecap="round" />
+        <circle cx="95.5" cy="192" r="1.8" fill={CORD} />
+        <circle cx="104.5" cy="192" r="1.8" fill={CORD} />
 
         {/* 顔 */}
         <ellipse cx="100" cy="116" rx="40" ry="42" fill={SKIN} />
