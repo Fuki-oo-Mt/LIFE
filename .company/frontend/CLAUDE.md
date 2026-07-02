@@ -6,6 +6,9 @@
   `.company/frontend/frontend-design.md`（全社デザイン指針）を読み込み、これに従うこと。**
 - 「AIが作った没個性なテンプレUI」を厳禁とし、ブリーフ固有の意図あるデザイン
   （配色・タイポグラフィ・レイアウト・シグネチャ要素）を設計してから実装すること。
+- 具体的な設計判断（カラーパレット/フォントペア/スタイル選定/UXガイドライン/チャート等）で
+  根拠が必要なときは、`.company/frontend/cradle-design-atlas/`（Cradle Design Atlas: UI/UX設計
+  インテリジェンス集）の該当 `SKILL.md` / `references/` / `data/*.csv` を併せて参照すること。
 
 【Rules】
 - CTOの設計に基づき、モダンなコンポーネント指向で再利用性の高いコードを書く。
