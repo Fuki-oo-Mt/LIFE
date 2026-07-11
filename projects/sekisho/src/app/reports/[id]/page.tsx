@@ -5,6 +5,9 @@ import { previousReport } from "../../../report/weekly";
 import type { WeeklyPayload } from "../../../report/weekly";
 import type { Kpi } from "../../../report/scoring";
 import { Radar } from "../../_components/Radar";
+import { ReleaseView } from "../../_components/ReleaseView";
+import { RingGauge } from "../../_components/RingGauge";
+import type { ReleasePayload } from "../../../report/release";
 import { delta, fmt, levelWord, type Level } from "../../../lib/view";
 
 export const dynamic = "force-dynamic";
@@ -33,11 +36,22 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
   const { id } = await params;
   const report = await prisma.report.findUnique({ where: { id }, include: { project: true } });
   if (!report) notFound();
+  const level = report.level as Level;
+
+  // リリースリスクレポートは専用ビューに分岐
+  if (report.type === "release") {
+    const rp = JSON.parse(report.payload) as ReleasePayload;
+    return (
+      <div className="wrap">
+        <div className="crumb"><Link href="/">← 一覧に戻る</Link></div>
+        <ReleaseView projectName={report.project.name} level={level} payload={rp} />
+      </div>
+    );
+  }
 
   const payload = JSON.parse(report.payload) as WeeklyPayload;
   const prev = await previousReport(report.projectId, "weekly", report.periodStart);
   const prevPayload = prev ? (JSON.parse(prev.payload) as WeeklyPayload) : null;
-  const level = report.level as Level;
 
   const ff = payload.metrics.firefightingRatioPct;
   const prevFf = prevPayload?.metrics.firefightingRatioPct ?? null;
@@ -61,10 +75,8 @@ export default async function ReportDetail({ params }: { params: Promise<{ id: s
         <div className="hero">
           <Radar dims={payload.metrics.dimensions} prev={prevPayload?.metrics.dimensions} />
           <div className="hero-read">
-            <div className={`readout score tone-${level}`}>{report.score}<span className="slash">/100</span></div>
-            <div style={{ marginTop: 12 }}>
-              <span className={`lamp lv-${level}`} style={{ fontSize: 14 }}><span className="bulb" />{levelWord[level]}</span>
-            </div>
+            <RingGauge value={report.score} level={level} size={172} />
+            <div><span className={`lamp lv-${level}`} style={{ fontSize: 13 }}><span className="bulb" />{levelWord[level]}</span></div>
             <div className="cap">
               最も弱い次元は <strong>{weakest.label}</strong>（{weakest.score}点）。
               {prevPayload && <> 破線は前週の形。</>}

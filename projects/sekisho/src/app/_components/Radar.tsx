@@ -37,12 +37,12 @@ export function Radar({ dims, prev }: { dims: Dimension[]; prev?: Dimension[] })
           strokeWidth={1.5} strokeDasharray="4 4" opacity={0.8} />
       )}
 
-      {/* 今週 */}
-      <g className="radar-poly">
+      {/* 今週（発光） */}
+      <g className="radar-poly" style={{ filter: "drop-shadow(0 0 5px var(--accent-glow))" }}>
         <polygon points={poly(dims)} fill="var(--accent-soft)" stroke="var(--accent)" strokeWidth={2} />
         {dims.map((d, i) => {
           const [x, y] = pt(d.score, i);
-          return <circle key={i} cx={x} cy={y} r={3.2} fill="var(--accent)" stroke="var(--surface)" strokeWidth={1.5} />;
+          return <circle key={i} cx={x} cy={y} r={3} fill="var(--accent)" stroke="var(--surface)" strokeWidth={1.5} />;
         })}
       </g>
 
