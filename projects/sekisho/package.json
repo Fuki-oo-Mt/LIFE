@@ -11,6 +11,7 @@
     "db:generate": "prisma generate",
     "seed": "tsx scripts/seed.ts",
     "report:weekly": "tsx scripts/generate-weekly.ts",
+    "report:release": "tsx scripts/release.ts",
     "ingest": "tsx scripts/ingest.ts",
     "export": "tsx scripts/export.ts"
   },

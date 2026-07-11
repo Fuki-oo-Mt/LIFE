@@ -33,60 +33,84 @@ function Trend({ points }: { points: { score: number; level: Level }[] }) {
 }
 
 export default async function Home() {
-  const reports = await prisma.report.findMany({
-    where: { type: "weekly" },
-    orderBy: { periodStart: "desc" },
-    include: { project: true },
-    take: 26,
-  });
+  const [reports, releases] = await Promise.all([
+    prisma.report.findMany({ where: { type: "weekly" }, orderBy: { periodStart: "desc" }, include: { project: true }, take: 26 }),
+    prisma.report.findMany({ where: { type: "release" }, orderBy: { createdAt: "desc" }, include: { project: true }, take: 20 }),
+  ]);
   const trend = reports.slice().reverse().map((r) => ({ score: r.score, level: r.level as Level }));
   const latest = reports[0];
+  const releaseVerdict = (level: Level) => (level === "green" ? "GO" : level === "yellow" ? "分割推奨" : "要レビュー");
 
   return (
     <div className="wrap">
       <div className="masthead">
         <div className="wordmark">
-          <span className="lantern" />
+          <span className="mark" />
           <div>
             <h1>関所</h1>
-            <div className="en">Sekisho — Ops Watch Station</div>
+            <div className="en">Sekisho — Ops Intelligence</div>
           </div>
         </div>
         <GenerateButton />
       </div>
 
-      {reports.length === 0 ? (
+      {reports.length === 0 && releases.length === 0 ? (
         <div className="panel pad">
           <p>まだレポートがありません。</p>
-          <p className="dim-text">「今週のレポートを生成」を押すか、<span className="mono">npm run seed</span> で過去分のデモを作成できます。</p>
+          <p className="dim-text"><span className="mono">npm run seed</span> でデモを作成、または「今週のレポートを生成」から始められます。</p>
         </div>
       ) : (
         <>
-          <div className="panel pad">
-            <div className="panel-head">
-              <span className="eyebrow">Weekly Health · 直近{trend.length}週</span>
-              {latest && (
-                <span style={{ marginLeft: "auto" }} className={`lamp lv-${latest.level}`}>
-                  <span className="bulb" />今週 {latest.score} · {levelWord[latest.level as Level]}
-                </span>
-              )}
-            </div>
-            <Trend points={trend} />
-          </div>
-
-          <div className="panel" style={{ marginTop: 18 }}>
-            {reports.map((r) => (
-              <Link key={r.id} href={`/reports/${r.id}`} className="log-row">
-                <div className={`rowscore tone-${r.level}`}>{r.score}</div>
-                <span className={`lamp lv-${r.level}`}><span className="bulb" />{levelWord[r.level as Level]}</span>
-                <div>
-                  <div style={{ fontWeight: 600 }}>{r.project.name}</div>
-                  <div className="dim-text mono">{r.headline}</div>
+          {reports.length > 0 && (
+            <>
+              <div className="panel pad">
+                <div className="panel-head">
+                  <span className="eyebrow">週次システムレポート · 直近{trend.length}週</span>
+                  {latest && (
+                    <span style={{ marginLeft: "auto" }} className={`lamp lv-${latest.level}`}>
+                      <span className="bulb" />今週 {latest.score} · {levelWord[latest.level as Level]}
+                    </span>
+                  )}
                 </div>
-                <div className="arrow">→</div>
-              </Link>
-            ))}
-          </div>
+                <Trend points={trend} />
+              </div>
+              <div className="panel" style={{ marginTop: 18 }}>
+                {reports.map((r) => (
+                  <Link key={r.id} href={`/reports/${r.id}`} className="log-row">
+                    <div className={`rowscore tone-${r.level}`}>{r.score}</div>
+                    <span className={`lamp lv-${r.level}`}><span className="bulb" />{levelWord[r.level as Level]}</span>
+                    <div>
+                      <div style={{ fontWeight: 600 }}>{r.project.name}</div>
+                      <div className="dim-text mono">{r.headline}</div>
+                    </div>
+                    <div className="arrow">→</div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
+
+          {releases.length > 0 && (
+            <>
+              <div className="panel-head" style={{ marginTop: 30, marginBottom: 12 }}>
+                <span className="eyebrow">リリースリスクレポート · {releases.length}件</span>
+                <span className="dim-text mono" style={{ marginLeft: "auto", fontSize: 12 }}>数値=危険度（低いほど安全）</span>
+              </div>
+              <div className="panel">
+                {releases.map((r) => (
+                  <Link key={r.id} href={`/reports/${r.id}`} className="log-row">
+                    <div className={`rowscore tone-${r.level}`}>{r.score}</div>
+                    <span className={`lamp lv-${r.level}`}><span className="bulb" />{releaseVerdict(r.level as Level)}</span>
+                    <div>
+                      <div style={{ fontWeight: 600 }}>{r.project.name}</div>
+                      <div className="dim-text mono">{r.headline}</div>
+                    </div>
+                    <div className="arrow">→</div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

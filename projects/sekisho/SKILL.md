@@ -80,6 +80,15 @@ npm run dev     # http://localhost:3000  ダッシュボードで見る（レー
 または、書き出したHTML（`tmp/sekisho/<project>_<期間>.html`）をブラウザで直接開く。
 既存レポートを後から書き出すには: `npm run export -- latest --project <キー>`
 
+## （別機能）リリースリスクレポート
+週次とは独立して、1件のリリースの危険度採点＋分割提案を出せる。
+リリース直前に、変更差分・クリティカルパス・DBマイグレ・CI・切り戻し・タイミングを集めて
+`docs/release-schema.md` の形式にし、次で生成する:
+```bash
+npm run report:release -- release.json [--export]   # または POST /api/release
+```
+判定は GO / 分割推奨 / 要レビュー。要レビュー時は「安全順の分割リリース計画」が出る。
+
 ## ルール
 - **推測で数値を作らない。** 取れないものは空＋missingSources。
 - 期間は先週（月〜日）。特定週を指定するなら observations.json の `period` に入れる。

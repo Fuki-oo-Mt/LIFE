@@ -1,169 +1,184 @@
 /* ============================================================
-   関所 (Sekisho) — 「計器と提灯」: 見張り所の計器盤を、提灯(琥珀)が照らす
-   署名要素 = 健全性レーダー(スコープ)。琥珀アクセントは一点豪華に絞る。
-   タイポ署名 = 数値・見出しは等幅(計器の読み), 本文はサンス。
+   関所 (Sekisho) — Cradle Instrument
+   深宇宙の精密観測儀。洗練・高貴・高機能。
+   深藍(near-black cool)の計器盤に、高貴な発光アクセント(藍紫)。
+   署名要素 = リング・ゲージ（観測儀の読み）。ヘアラインの精度で高機能感。
    ============================================================ */
 :root {
-  --plane: #eef0f4;
+  --plane: #eef0f6;
   --surface: #ffffff;
-  --surface-2: #f4f6f9;
-  --border: rgba(20, 22, 30, 0.10);
-  --ring: rgba(20, 22, 30, 0.06);
-  --ink: #171922;
-  --ink-2: #5c6270;
-  --ink-mut: #8b909c;
-  --accent: #c77f16;
-  --accent-soft: rgba(199, 127, 22, 0.13);
-  --good: #0f8f3f;
-  --warn: #c98500;
-  --bad: #d03b3b;
-  --good-soft: #e6f4ea;
-  --warn-soft: #f8efd7;
-  --bad-soft: #f8e5e5;
-  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 6px 20px -8px rgba(16, 24, 40, 0.10);
+  --surface-2: #f4f6fb;
+  --border: rgba(28, 34, 58, 0.12);
+  --ring: rgba(28, 34, 58, 0.06);
+  --ink: #14172a;
+  --ink-2: #565d78;
+  --ink-mut: #8a90a8;
+  --accent: #5b4fe0;            /* 藍紫 (noble electric indigo) */
+  --accent-2: #8e86ff;
+  --accent-soft: rgba(91, 79, 224, 0.10);
+  --accent-glow: rgba(91, 79, 224, 0.35);
+  --good: #12a97a;
+  --warn: #b7841a;
+  --bad: #e0485f;
+  --good-soft: #e2f3ee;
+  --warn-soft: #f4ecd7;
+  --bad-soft: #fbe6ea;
+  --shadow: 0 1px 2px rgba(20, 23, 42, 0.05), 0 10px 30px -14px rgba(20, 23, 42, 0.18);
+  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  --sans: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --sans: system-ui, -apple-system, "Segoe UI", "Inter", "Hiragino Sans", "Noto Sans JP", sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --plane: #121218;
-    --surface: #1b1c23;
-    --surface-2: #23242e;
-    --border: rgba(255, 255, 255, 0.09);
-    --ring: rgba(255, 255, 255, 0.06);
-    --ink: #f3f2ee;
-    --ink-2: #a6a8b2;
-    --ink-mut: #797b86;
-    --accent: #e8a13a;
-    --accent-soft: rgba(232, 161, 58, 0.14);
-    --good: #22b455;
-    --warn: #fab219;
-    --bad: #e5484d;
-    --good-soft: #10281a;
-    --warn-soft: #2c2408;
-    --bad-soft: #2c1416;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+    --plane: #070912;            /* 深宇宙 */
+    --surface: #0f1220;
+    --surface-2: #161a2b;
+    --border: rgba(150, 165, 215, 0.13);
+    --ring: rgba(150, 165, 215, 0.07);
+    --ink: #eef1fb;
+    --ink-2: #a4abc8;
+    --ink-mut: #656d8c;
+    --accent: #8b7dff;           /* 発光する藍紫 */
+    --accent-2: #b3aaff;
+    --accent-soft: rgba(139, 125, 255, 0.14);
+    --accent-glow: rgba(139, 125, 255, 0.45);
+    --good: #35d9a6;
+    --warn: #e7ba5c;
+    --bad: #ff6b81;
+    --good-soft: #0d2a22;
+    --warn-soft: #2a2410;
+    --bad-soft: #2c1620;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 16px 40px -18px rgba(0, 0, 0, 0.8);
+    --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
   }
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
+  position: relative;
   background: var(--plane);
   color: var(--ink);
   font-family: var(--sans);
-  line-height: 1.62;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.005em;
 }
+/* 高貴な微光（極薄いオーロラ）。深宇宙の観測儀の空気感。 */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(60% 40% at 82% -8%, var(--accent-glow), transparent 60%),
+    radial-gradient(46% 34% at 6% 108%, var(--accent-soft), transparent 60%);
+  opacity: 0.5;
+}
+.wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 44px 24px 110px; }
 a { color: inherit; text-decoration: none; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; border-radius: 5px; }
 
-.wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px 96px; }
+/* ---- マストヘッド ---- */
+.masthead { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 34px; }
+.wordmark { display: flex; align-items: center; gap: 14px; }
+.mark { width: 22px; height: 22px; flex: none; position: relative; }
+.mark::before, .mark::after { content: ""; position: absolute; inset: 0; border-radius: 50%; }
+.mark::before { background: radial-gradient(circle at 35% 30%, var(--accent-2), var(--accent) 70%); box-shadow: 0 0 18px 1px var(--accent-glow); }
+.mark::after { inset: 6px; background: var(--plane); opacity: 0.55; }
+.wordmark h1 { font-size: 21px; font-weight: 500; letter-spacing: 0.22em; margin: 0; padding-left: 0.22em; }
+.wordmark .en { font-family: var(--mono); font-size: 10.5px; color: var(--ink-mut); letter-spacing: 0.34em; text-transform: uppercase; margin-top: 3px; }
 
-/* ---- マストヘッド（提灯マーク付きワードマーク） ---- */
-.masthead { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
-.wordmark { display: flex; align-items: center; gap: 12px; }
-.lantern { width: 15px; height: 15px; border-radius: 3px; background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft), 0 0 18px 1px var(--accent); transform: rotate(45deg); flex: none; }
-.wordmark h1 { font-size: 20px; font-weight: 700; letter-spacing: 0.04em; margin: 0; }
-.wordmark .en { font-family: var(--mono); font-size: 11px; color: var(--ink-mut); letter-spacing: 0.22em; text-transform: uppercase; margin-top: 2px; }
-
-.eyebrow { font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mut); }
+.eyebrow { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mut); }
 .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
-/* ---- パネル ---- */
-.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); }
-.panel + .panel { margin-top: 18px; }
-.pad { padding: 22px 24px; }
-.panel-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+/* ---- パネル（微かなシーンと深い影で浮遊感） ---- */
+.panel { position: relative; background: var(--surface); background-image: var(--sheen); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); }
+.panel + .panel { margin-top: 16px; }
+.pad { padding: 24px 26px; }
+.panel-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
 .panel-head .eyebrow { color: var(--ink-2); }
 
-/* ---- レベルのランプ ---- */
-.lamp { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
-.lamp .bulb { width: 9px; height: 9px; border-radius: 50%; flex: none; }
-.lv-green { color: var(--good); }
-.lv-green .bulb { background: var(--good); box-shadow: 0 0 8px var(--good); }
-.lv-yellow { color: var(--warn); }
-.lv-yellow .bulb { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
-.lv-red { color: var(--bad); }
-.lv-red .bulb { background: var(--bad); box-shadow: 0 0 8px var(--bad); }
+/* ---- レベルの微光ドット ---- */
+.lamp { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; }
+.lamp .bulb { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.lv-green { color: var(--good); } .lv-green .bulb { background: var(--good); box-shadow: 0 0 10px var(--good); }
+.lv-yellow { color: var(--warn); } .lv-yellow .bulb { background: var(--warn); box-shadow: 0 0 10px var(--warn); }
+.lv-red { color: var(--bad); } .lv-red .bulb { background: var(--bad); box-shadow: 0 0 10px var(--bad); }
 
-/* ---- 大きなスコア読み ---- */
-.readout { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 700; line-height: 0.92; letter-spacing: -0.01em; }
-.readout .slash { color: var(--ink-mut); font-weight: 500; font-size: 0.42em; }
-.tone-green { color: var(--good); }
-.tone-yellow { color: var(--warn); }
-.tone-red { color: var(--bad); }
+/* ---- 大きな読み ---- */
+.readout { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600; line-height: 0.9; letter-spacing: -0.02em; }
+.readout .slash { color: var(--ink-mut); font-weight: 400; font-size: 0.4em; letter-spacing: 0; }
+.tone-green { color: var(--good); } .tone-yellow { color: var(--warn); } .tone-red { color: var(--bad); }
 
-/* ---- 詳細ヒーロー（レーダー＋読み） ---- */
-.hero { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(220px, 340px); gap: 8px; align-items: center; }
+/* ---- 詳細ヒーロー ---- */
+.hero { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(230px, 320px); gap: 18px; align-items: center; }
 @media (max-width: 720px) { .hero { grid-template-columns: 1fr; } }
-.hero-read { padding: 8px 8px 8px 12px; }
-.hero-read .score { font-size: 76px; }
-.hero-read .cap { color: var(--ink-2); font-size: 13.5px; margin-top: 10px; }
+.hero-read { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+.hero-read .cap { color: var(--ink-2); font-size: 13px; line-height: 1.55; }
 
-/* レーダーの描き込みアニメ（reduced-motion尊重） */
-.radar-poly { transform-origin: center; animation: sweepIn 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-@keyframes sweepIn { from { transform: scale(0.05); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+/* リング・ゲージ（署名） */
+.ring-wrap { position: relative; display: inline-flex; }
+.ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring-center .rv { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+.ring-center .rl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 6px; }
+.radar-poly { transform-origin: center; animation: sweepIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes sweepIn { from { transform: scale(0.1); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .radar-poly { animation: none; } }
 
-/* ---- 火消しゲージ ---- */
-.gauge-track { height: 12px; border-radius: 999px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--border); }
-.gauge-fill { height: 100%; border-radius: 999px; }
+/* ---- ゲージ（火消し/SLO） ---- */
+.gauge-track { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--border); }
+.gauge-fill { height: 100%; border-radius: 999px; box-shadow: 0 0 14px -2px currentColor; }
 
 /* ---- KPIカード ---- */
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 11px; }
-.kpi { background: var(--surface-2); border: 1px solid var(--ring); border-radius: 11px; padding: 13px 14px; }
-.kpi .k-label { font-size: 12px; color: var(--ink-2); }
-.kpi .k-val { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 23px; font-weight: 700; margin-top: 3px; }
-.kpi .k-val .u { font-size: 12px; color: var(--ink-mut); font-weight: 500; margin-left: 3px; }
-.kpi .k-delta { font-family: var(--mono); font-size: 11.5px; font-weight: 600; margin-top: 3px; }
-.d-good { color: var(--good); }
-.d-bad { color: var(--bad); }
-.d-flat { color: var(--ink-mut); }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(152px, 1fr)); gap: 12px; }
+.kpi { background: var(--surface-2); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 15px; transition: border-color 0.15s; }
+.kpi:hover { border-color: var(--accent-soft); }
+.kpi .k-label { font-size: 11.5px; color: var(--ink-2); letter-spacing: 0.02em; }
+.kpi .k-val { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 23px; font-weight: 600; margin-top: 5px; letter-spacing: -0.01em; }
+.kpi .k-val .u { font-size: 12px; color: var(--ink-mut); font-weight: 400; margin-left: 3px; }
+.kpi .k-delta { font-family: var(--mono); font-size: 11px; font-weight: 600; margin-top: 4px; }
+.d-good { color: var(--good); } .d-bad { color: var(--bad); } .d-flat { color: var(--ink-mut); }
 
-/* ---- 減点内訳 ---- */
-.ded { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: 13.5px; }
+/* ---- 内訳 ---- */
+.ded { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--ring); font-size: 13.5px; }
 .ded:last-child { border-bottom: none; }
-.ded .dim { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--accent); background: var(--accent-soft); padding: 1px 7px; border-radius: 5px; margin-right: 8px; }
-.ded .pts { font-family: var(--mono); color: var(--bad); font-weight: 700; }
+.ded .dim { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 6px; margin-right: 9px; }
+.ded .pts { font-family: var(--mono); color: var(--bad); font-weight: 600; }
 
 /* ---- インシデント台帳 ---- */
-.inc-summary { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 16px; }
+.inc-summary { display: flex; gap: 26px; flex-wrap: wrap; margin-bottom: 18px; }
 .inc-stat { display: flex; flex-direction: column; }
-.inc-stat .n { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 700; }
-.inc-stat .l { font-size: 11px; color: var(--ink-2); }
+.inc-stat .n { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 25px; font-weight: 600; }
+.inc-stat .l { font-size: 11px; color: var(--ink-2); margin-top: 2px; }
 .inc-table { display: flex; flex-direction: column; }
-.inc-row { display: grid; grid-template-columns: 46px 74px 1fr auto; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--border); }
+.inc-row { display: grid; grid-template-columns: 46px 76px 1fr auto; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--ring); }
 .inc-row:first-child { border-top: none; }
-.inc-row.resolved { opacity: 0.62; }
-.sev { font-family: var(--mono); font-size: 11px; font-weight: 700; text-align: center; padding: 2px 0; border-radius: 5px; letter-spacing: 0.02em; }
-.sev-P1 { color: #fff; background: var(--bad); }
+.inc-row.resolved { opacity: 0.55; }
+.sev { font-family: var(--mono); font-size: 11px; font-weight: 700; text-align: center; padding: 3px 0; border-radius: 6px; letter-spacing: 0.02em; }
+.sev-P1 { color: #fff; background: var(--bad); box-shadow: 0 0 12px -2px var(--bad); }
 .sev-P2 { color: #241400; background: var(--warn); }
 .sev-P3 { color: var(--warn); background: var(--warn-soft); }
 .sev-P4 { color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--border); }
 .inc-status { font-family: var(--mono); font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
-.st-open { color: var(--bad); }
-.st-resolved { color: var(--ink-mut); }
+.st-open { color: var(--bad); } .st-resolved { color: var(--ink-mut); }
 .inc-title { font-size: 13.5px; }
-.inc-title .rec { font-family: var(--mono); font-size: 10px; color: var(--warn); background: var(--warn-soft); padding: 1px 5px; border-radius: 4px; margin-left: 7px; }
+.inc-title .rec { font-family: var(--mono); font-size: 10px; color: var(--warn); background: var(--warn-soft); padding: 1px 6px; border-radius: 5px; margin-left: 8px; }
 .inc-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-mut); text-align: right; white-space: nowrap; }
 .inc-meta a { color: var(--accent); }
 .inc-age-hot { color: var(--bad); }
 
-.prose { white-space: pre-wrap; font-size: 14.5px; color: var(--ink); }
-.note { font-size: 12.5px; color: var(--warn); background: var(--warn-soft); padding: 9px 12px; border-radius: 9px; }
+.prose { white-space: pre-wrap; font-size: 14.5px; color: var(--ink); line-height: 1.72; }
+.note { font-size: 12.5px; color: var(--warn); background: var(--warn-soft); padding: 10px 13px; border-radius: 10px; }
 .dim-text { color: var(--ink-2); font-size: 13px; }
 
-/* ---- ボタン ---- */
-.btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #1a1205; border: none; border-radius: 9px; padding: 10px 16px; font-size: 13.5px; font-weight: 700; font-family: var(--sans); cursor: pointer; }
-.btn:disabled { opacity: 0.55; cursor: default; }
+/* ---- ボタン（発光する高貴なアクセント） ---- */
+.btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; border: none; border-radius: 11px; padding: 11px 18px; font-size: 13.5px; font-weight: 600; letter-spacing: 0.02em; font-family: var(--sans); cursor: pointer; box-shadow: 0 6px 20px -6px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.22); transition: transform 0.12s, box-shadow 0.15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px -6px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+.btn:disabled { opacity: 0.5; cursor: default; transform: none; }
 
-/* ---- 週ログ一覧 ---- */
-.log-row { display: grid; grid-template-columns: 64px 84px 1fr 20px; align-items: center; gap: 16px; padding: 15px 24px; border-top: 1px solid var(--border); transition: background 0.12s; }
+/* ---- 一覧 ---- */
+.log-row { display: grid; grid-template-columns: 62px 96px 1fr 20px; align-items: center; gap: 16px; padding: 16px 26px; border-top: 1px solid var(--ring); transition: background 0.14s; }
 .log-row:first-of-type { border-top: none; }
 .log-row:hover { background: var(--surface-2); }
-.log-row .rowscore { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 27px; font-weight: 700; }
+.log-row .rowscore { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
 .log-row .arrow { color: var(--ink-mut); font-family: var(--mono); }
-.crumb { font-family: var(--mono); font-size: 12px; color: var(--ink-mut); margin-bottom: 20px; letter-spacing: 0.04em; }
+.crumb { font-family: var(--mono); font-size: 12px; color: var(--ink-mut); margin-bottom: 22px; letter-spacing: 0.08em; }
 .crumb a:hover { color: var(--accent); }

@@ -78,7 +78,12 @@ src/
 scripts/      seed / generate-weekly（cron用）
 ```
 
+## リリースリスクレポート（週次とは別機能）
+リリース直前の1件を採点し、分割/カナリアを提案する。危険度0-100（高いほど危険）。
+- 生成: `npm run report:release -- release.json` または `POST /api/release`
+- 判定: 0–29 GO / 30–59 分割推奨 / 60–100 要レビュー。要レビュー時は安全順の分割計画を出力
+- 形式: [`docs/release-schema.md`](docs/release-schema.md)
+
 ## ロードマップ
-- リリースリスクレポート（PR差分の採点＋分割提案）を同一基盤に追加
 - Slack通知レンダラー（導入決定後。レポートデータは共通、出力先を差し替えるだけ）
 - インシデント/MTTRの取り込み精度向上、スコア重みの学習校正
