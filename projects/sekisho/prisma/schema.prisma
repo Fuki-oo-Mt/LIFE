@@ -1,0 +1,38 @@
+// 関所 (Sekisho) データモデル
+// 開発: SQLite（すぐ動く）。本番: 下の provider を "postgresql" に変えるだけ。
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 監視対象のプロジェクト（会社／システム単位）。汎用化の単位。
+model Project {
+  id        String   @id @default(cuid())
+  key       String   @unique // 例: "client-portal"
+  name      String
+  createdAt DateTime @default(now())
+  reports   Report[]
+}
+
+// 生成された1本のレポート（週次 or リリース）。
+// payload に構造化した全指標をJSON文字列で保存し、過去比較に使う。
+model Report {
+  id          String   @id @default(cuid())
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
+  type        String   // "weekly" | "release"
+  createdAt   DateTime @default(now())
+  periodStart DateTime // 集計対象期間の開始
+  periodEnd   DateTime // 集計対象期間の終了
+  score       Float    // 総合健全性スコア(週次) or リスクスコア(リリース) 0-100
+  level       String   // "green" | "yellow" | "red"
+  headline    String   // 一行サマリ
+  narrative   String   // AI所見（来週の推奨アクション含む）
+  payload     String   // 構造化指標のJSON文字列
+
+  @@index([projectId, type, periodStart])
+}

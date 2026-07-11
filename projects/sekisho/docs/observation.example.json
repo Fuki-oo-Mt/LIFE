@@ -1,0 +1,60 @@
+{
+  "project": { "key": "client-portal", "name": "クライアントポータル" },
+  "observations": {
+    "quality": {
+      "availabilityPct": 99.95,
+      "errorRatePct": 0.42,
+      "latencyP95Ms": 680,
+      "deployCausedIncidents": 1,
+      "sloTargetPct": 99.9
+    },
+    "users": {
+      "activeUsers": 48200,
+      "newUsers": 940,
+      "growthRatePct": 1.8,
+      "affectedUsers": 1200
+    },
+    "work": {
+      "manualOpsTasks": 12,
+      "opsBacklog": 14,
+      "oldestOpenDays": 12,
+      "firefightingItems": 33,
+      "improvementItems": 9
+    },
+    "infra": {
+      "alertsFired": 42,
+      "incidents": 5,
+      "mttrMinutes": 63,
+      "earlyDetectionRatePct": 78
+    },
+    "dataPlatform": {
+      "pipelineSuccessRatePct": 98.5,
+      "freshnessLagMinutes": 22,
+      "rowsProcessed": 1350000,
+      "failedJobs": 2
+    }
+  },
+  "incidentLog": [
+    {
+      "ref": "#4821",
+      "title": "API 5xxエラー急増（決済サービス）",
+      "source": "aws",
+      "severity": "P1",
+      "status": "open",
+      "openedAt": "2026-07-07T02:14:00Z",
+      "url": "https://github.com/example/repo/issues/4821"
+    },
+    {
+      "ref": "#4830",
+      "title": "DBコネクションプール枯渇",
+      "source": "github",
+      "severity": "P2",
+      "status": "resolved",
+      "openedAt": "2026-07-09T05:00:00Z",
+      "resolvedAt": "2026-07-09T06:40:00Z",
+      "url": "https://github.com/example/repo/issues/4830",
+      "permanentFix": true
+    }
+  ],
+  "missingSources": []
+}
