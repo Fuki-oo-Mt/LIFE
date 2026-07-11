@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+*.log
+.env
+.env.local
+# ローカル開発用SQLite（本番はPostgres）
+prisma/dev.db
+prisma/dev.db-journal
+# 生成レポートの一時出力（HTMLエクスポート等）
+tmp/
