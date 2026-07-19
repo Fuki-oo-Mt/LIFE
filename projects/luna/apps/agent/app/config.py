@@ -21,11 +21,14 @@ class Settings:
 
     # Claude
     anthropic_api_key: str = os.getenv("ANTHROPIC_API_KEY", "").strip()
-    claude_model: str = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6").strip()
+    claude_model: str = os.getenv("CLAUDE_MODEL", "claude-sonnet-5").strip()
 
     # Gemini
     gemini_api_key: str = os.getenv("GEMINI_API_KEY", "").strip()
-    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
+    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
+
+    # Gemini 無料枠のレート制限(429)対策
+    gemini_max_retries: int = int(os.getenv("GEMINI_MAX_RETRIES", "3"))
 
     # Self-hosted（将来の自社モデル / ローカルLLM）— OpenAI互換
     self_hosted_base_url: str = os.getenv(
