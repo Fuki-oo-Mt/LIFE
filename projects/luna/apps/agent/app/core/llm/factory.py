@@ -40,7 +40,9 @@ def get_provider(settings) -> LLMProvider:
             from .gemini import GeminiProvider
 
             return GeminiProvider(
-                api_key=settings.gemini_api_key, model=settings.gemini_model
+                api_key=settings.gemini_api_key,
+                model=settings.gemini_model,
+                max_retries=settings.gemini_max_retries,
             )
         except Exception as exc:
             logger.warning("Gemini初期化に失敗、エコーへ退避: %s", exc)

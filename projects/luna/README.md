@@ -76,8 +76,13 @@ npm run dev                   # http://localhost:3000
 `apps/agent/.env` の一行を変えるだけです。
 
 ```env
-LLM_PROVIDER=claude     # claude | gemini | echo | self_hosted
+LLM_PROVIDER=gemini     # gemini | claude | echo | self_hosted
 ```
+
+**推奨は Gemini（無料枠あり・クレカ不要）。** [Google AI Studio](https://aistudio.google.com/apikey) で
+APIキーを無料発行し、`GEMINI_API_KEY` に設定してください。無料枠のレート制限（429）に当たった場合は
+自動でリトライします（`GEMINI_MAX_RETRIES` で調整可）。
+※無料枠では入力がGoogleのモデル改善に利用されうるため、機密データを扱う段階で有料枠への切替を推奨。
 
 将来、自社モデルが育ったら `LLM_PROVIDER=self_hosted` にするだけで他社から独立します。
 
